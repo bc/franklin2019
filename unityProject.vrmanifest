@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.munich_reach_visioperturb.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\Franklin lab\\Documents\\BrianCohn\\munich_reach_visioperturb (1)\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "munich_reach_visioperturb [Testing]"
+        }
+      }
+    }
+  ]
+}
