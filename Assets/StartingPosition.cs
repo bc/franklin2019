@@ -7,23 +7,17 @@ public class StartingPosition : MonoBehaviour
 {
 	private int framesInStartCube = 0;
 	public GameObject goSignalPrefab;
-	private AdjustPositions taskPositionsScript;
 	private Signals signalScript;
 	private int randomDebounce;
 
 	private Renderer startCubeRenderer;
-	// Use this for initialization
-	void Start () {
+
+	private void Start () {
 		startCubeRenderer = gameObject.GetComponent<Renderer>();
 		startCubeRenderer.material.color = Color.grey;
-		taskPositionsScript = this.GetComponentInParent<AdjustPositions>();
-		signalScript = GameObject.Find("SignalRecording").GetComponent<Signals>();
+		signalScript = GameObject.Find("ScriptManager").GetComponent<Signals>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -32,17 +26,16 @@ public class StartingPosition : MonoBehaviour
 
 	private void OnTriggerStay(Collider other)
 	{
-
-		if (framesInStartCube == randomDebounce & taskPositionsScript.taskState != "taskBegun")
+// TODO makesure task hasn't already started
+		if (framesInStartCube == randomDebounce)
 		{
 			startCubeRenderer.material.color = Color.green;
 			GameObject goSignalGameObject = Instantiate(goSignalPrefab, transform);
 			Destroy(goSignalGameObject, 2);
 			framesInStartCube = 0;
-//			Debug.Log("Arranging task now; please start movement reach. StartPoint:" + Time.time);
-			taskPositionsScript.taskState = "taskBegun";
+			Debug.Log("taskBegun");
 			signalScript.ClearOldValues();
-			taskPositionsScript.ArrangeCondition(taskPositionsScript.blockNumber, taskPositionsScript.trialNumber);
+			//TODO change to next task in queue
 		}
 		framesInStartCube += 1;
 	}

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Policy;
 using UnityEngine;
 using System.Text;
 
@@ -25,8 +23,8 @@ public class Signals : MonoBehaviour
 	private GameObject HMD;
 	private GameObject leftController;
 	private GameObject rightController;
-	private GameObject leftAvatar;
-	private GameObject rightAvatar;
+	public GameObject leftAvatar;
+	public GameObject rightAvatar;
 	private List<Transform_stored> HMD_Observations = new List<Transform_stored>();
 	private List<Transform_stored> leftControllerObservations = new List<Transform_stored>();
 	private List<Transform_stored> rightControllerObservations = new List<Transform_stored>();
@@ -35,18 +33,15 @@ public class Signals : MonoBehaviour
 	private List<float> times = new List<float>();
 	public List<string> currentTask = new List<string>();
 	public string participantId = "null_participant_id";
-	private AdjustPositions taskPositionsScript;
 
-	// Use this for initialization
+
 	void Start() {
-		HMD = GameObject.Find("Camera");
-		leftController = GameObject.Find("Controller (left)");
-		rightController = GameObject.Find("Controller (right)");
-		leftAvatar = GameObject.Find("Controller (left)avatar");
-		rightAvatar = GameObject.Find("Controller (right)avatar");
-		GameObject taskContainerObject = GameObject.FindGameObjectsWithTag("taskContainerTag")[0];
-		taskPositionsScript = taskContainerObject.GetComponent<AdjustPositions>();
+		HMD = GameObject.Find("CenterEyeAnchor");
+		leftController = GameObject.Find("LeftControllerAnchor");
+		rightController = GameObject.Find("RightControllerAnchor");
 		
+		GameObject taskContainerObject = GameObject.FindGameObjectsWithTag("taskContainerTag")[0];
+		Debug.Log($"the leftavatar is {leftAvatar.name} and right is {rightAvatar.name}");
 	}
 	
 	// Update is called once per frame
@@ -109,6 +104,7 @@ public class Signals : MonoBehaviour
 //	Path.Combine(docPath, "WriteLines.txt")
 	static void AddHeader(StreamWriter myWriter)
 	{
+		//TODO ensure block info is updated
 		string header =
 			"time,trial_number,condition_name,hand,block_number,participant_id,hmd_x,hmd_y,hmd_z,hmd_rot_x,hmd_rot_y,hmd_rot_z,leftController_x,leftController_y,leftController_z,leftController_rot_x,leftController_rot_y,leftController_rot_z,rightController_x,rightController_y,rightController_z,rightController_rot_x,rightController_rot_y,rightController_rot_z,leftAvatar_x,leftAvatar_y,leftAvatar_z,leftAvatar_rot_x,leftAvatar_rot_y,leftAvatar_rot_z,rightAvatar_x,rightAvatar_y,rightAvatar_z,rightAvatar_rot_x,rightAvatar_rot_y,rightAvatar_rot_z";
 		myWriter.WriteLine(header);
@@ -135,7 +131,7 @@ public class Signals : MonoBehaviour
 			for (int i = 0; i < times.Count; i++)
 			{
 				outputFile.Write(times[i] + ",");
-				outputFile.Write(taskPositionsScript.trialNumber + "," + taskPositionsScript.currentConditionName + "," + RightOrLeftToString(taskPositionsScript.nameOfSuccessfulAvatar) + "," + taskPositionsScript.blockNumber + "," + participantId + ",");
+				//outputFile.Write(taskPositionsScript.trialNumber + "," + taskPositionsScript.currentConditionName + "," + RightOrLeftToString(taskPositionsScript.nameOfSuccessfulAvatar) + "," + taskPositionsScript.blockNumber + "," + participantId + ",");
 				WriteTransform(outputFile, HMD_Observations[i]);
 				WriteTransform(outputFile, leftControllerObservations[i]);
 				WriteTransform(outputFile, rightControllerObservations[i]);

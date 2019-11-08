@@ -5,9 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Plugins/VRArmIK/Demo/VRArmIK-Demo.unity
-    guid: 7652e061aab5f4d45b2b35d52b83ac95
   - enabled: 1
     path: Assets/Scenes/VisuoPerturb.unity
     guid: 0c1231fe150ce5c409fabc9eab5aafe9
+  m_configObjects: {}
