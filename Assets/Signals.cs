@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using System.Text;
 
-public class Transform_stored
+public class StoredTransform
 {
 	public Vector3 position;
 	public Quaternion rotation;
 
-	public Transform_stored(Vector3 myPosition, Quaternion myRotation)
+	public StoredTransform(Vector3 myPosition, Quaternion myRotation)
 	{
 		position = myPosition;
 		rotation = myRotation;
@@ -25,11 +23,11 @@ public class Signals : MonoBehaviour
 	private GameObject rightController;
 	public GameObject leftAvatar;
 	public GameObject rightAvatar;
-	private List<Transform_stored> HMD_Observations = new List<Transform_stored>();
-	private List<Transform_stored> leftControllerObservations = new List<Transform_stored>();
-	private List<Transform_stored> rightControllerObservations = new List<Transform_stored>();
-	private List<Transform_stored> leftAvatarObservations = new List<Transform_stored>();
-	private List<Transform_stored> rightAvatarObservations = new List<Transform_stored>();
+	private List<StoredTransform> HMD_Observations = new List<StoredTransform>();
+	private List<StoredTransform> leftControllerObservations = new List<StoredTransform>();
+	private List<StoredTransform> rightControllerObservations = new List<StoredTransform>();
+	private List<StoredTransform> leftAvatarObservations = new List<StoredTransform>();
+	private List<StoredTransform> rightAvatarObservations = new List<StoredTransform>();
 	private List<float> times = new List<float>();
 	public List<string> currentTask = new List<string>();
 	public string participantId = "null_participant_id";
@@ -48,12 +46,12 @@ public class Signals : MonoBehaviour
 	void LateUpdate()
 	{
 
-		HMD_Observations.Add(new Transform_stored(HMD.transform.position, HMD.transform.rotation));
-		leftControllerObservations.Add(new Transform_stored(leftController.transform.position, leftController.transform.rotation));
-		rightControllerObservations.Add(new Transform_stored(rightController.transform.position, rightController.transform.rotation));
-		leftAvatarObservations.Add(new Transform_stored(leftAvatar.transform.position, leftAvatar.transform.rotation));
-		rightAvatarObservations.Add(new Transform_stored(rightAvatar.transform.position, rightAvatar.transform.rotation));
-		times.Add(Time.time * 1000.0f);
+		/*HMD_Observations.Add(new StoredTransform(HMD.transform.position, HMD.transform.rotation));
+		leftControllerObservations.Add(new StoredTransform(leftController.transform.position, leftController.transform.rotation));
+		rightControllerObservations.Add(new StoredTransform(rightController.transform.position, rightController.transform.rotation));
+		leftAvatarObservations.Add(new StoredTransform(leftAvatar.transform.position, leftAvatar.transform.rotation));
+		rightAvatarObservations.Add(new StoredTransform(rightAvatar.transform.position, rightAvatar.transform.rotation));
+		times.Add(Time.time * 1000.0f);*/
 	}
 
 	private string RightOrLeftToString(string avatarName)
@@ -87,17 +85,17 @@ public class Signals : MonoBehaviour
 	}
 	public void ClearOldValues()
 	{
-		HMD_Observations = new List<Transform_stored>();
-		leftControllerObservations = new List<Transform_stored>();
-		rightControllerObservations = new List<Transform_stored>();
-		leftAvatarObservations = new List<Transform_stored>();
-		rightAvatarObservations = new List<Transform_stored>();
+		HMD_Observations = new List<StoredTransform>();
+		leftControllerObservations = new List<StoredTransform>();
+		rightControllerObservations = new List<StoredTransform>();
+		leftAvatarObservations = new List<StoredTransform>();
+		rightAvatarObservations = new List<StoredTransform>();
 		times = new List<float>();
 	}
 
-	private List<float> TransformToPositionAndRotation(Transform_stored myTransform)
+	private List<float> TransformToPositionAndRotation(StoredTransform myStoredTransform)
 	{
-		List<float> concatenated = new List<float>{myTransform.position.x, myTransform.position.y,myTransform.position.z, myTransform.rotation.eulerAngles.x, myTransform.rotation.eulerAngles.y, myTransform.rotation.eulerAngles.z};
+		List<float> concatenated = new List<float>{myStoredTransform.position.x, myStoredTransform.position.y,myStoredTransform.position.z, myStoredTransform.rotation.eulerAngles.x, myStoredTransform.rotation.eulerAngles.y, myStoredTransform.rotation.eulerAngles.z};
 		return concatenated;
 	}
 	
@@ -110,9 +108,9 @@ public class Signals : MonoBehaviour
 		myWriter.WriteLine(header);
 	}
 
-	void WriteTransform(StreamWriter outputFile, Transform_stored myTransform)
+	void WriteTransform(StreamWriter outputFile, StoredTransform myStoredTransform)
 	{
-		List<float> myElements = TransformToPositionAndRotation(myTransform);
+		List<float> myElements = TransformToPositionAndRotation(myStoredTransform);
 		var myStringElements = myElements.Select(x => x+"");
 		foreach (string myElement in myStringElements)
 		{

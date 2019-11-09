@@ -1,65 +1,157 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 public enum RepresentationType
 {
-    Hand,Avatar
+    Cursor,Hand
+}
+
+
+public enum ReachingState
+{
+    NotReaching,
+    InitialReaching,
+    PerturbedInThisFrame,
+    ApplyingPerturbation,
+    AwaitingEndPosition
+
 }
 
 public class RepresentationController : MonoBehaviour
 {
-    public Vector3[] avatarAndHandPos;
-    public Quaternion[] avatarAndHandRot;
-    public GameObject AvatarSphere;
+    private Vector3[] cursorAndHandPos = new Vector3[2];
+    private Quaternion[] cursorAndHandRot = new Quaternion[2];
+    public GameObject CursorSphere;
     public GameObject HandRepresentation;
     // this is where the actual controller center always is
     public GameObject RepresentationCenterCube;
     public GameObject nearTarget;
     public GameObject farTarget;
-    public GameObject lineOfActionProgress;
+    public static readonly float perturbationApplicationSeconds = 0.1f;
+    private AnimationCurve normalizedAnimationCurve;
+    private float perturbStartTime;
+    private Vector3 positionPerturbationVector = Vector3.right * 0.020f;
+    public ReachingState reachingState = ReachingState.NotReaching;
+    private float applicationProgress;
+    public float perturbProgress;
+    public int trialIndex;//where each trial is a reach with given condition.
+    public Condition currentCondition;
+    public List<Condition> conditionsList;
+
+    
     private void Start()
     {
+        conditionsList = Condition.GenerateFullyJumbledBlockHandAlwaysPresent(1,1,0.020f,0);
+        InstantiateZeroBiases();
         ResetBiases();
+        normalizedAnimationCurve = AnimationCurve.EaseInOut(0.0f,0f,perturbationApplicationSeconds,1f);
+        //this is the time since the last perturbation.
+        currentCondition = conditionsList[0];
     }
 
+    
    private void Update()
-    {
-        AvatarSphere.transform.localPosition = avatarAndHandPos[0];
-        AvatarSphere.transform.localRotation = avatarAndHandRot[0];
-        HandRepresentation.transform.localPosition = avatarAndHandPos[1];
-        HandRepresentation.transform.localRotation = avatarAndHandRot[1];
-        NormalizedTaskProgress(nearTarget.transform.position,farTarget.transform.position,RepresentationCenterCube.transform.position);
-    }
-
-   private void NormalizedTaskProgress(Vector3 nearPosition, Vector3 farPosition, Vector3 controllerPosition)
    {
-       var lineOfAction = farPosition - nearPosition;
-       var currentLineProgress = Vector3.Project(controllerPosition - nearPosition, lineOfAction);
-       lineOfActionProgress.transform.position = currentLineProgress;
-       Debug.DrawLine(nearPosition,farPosition,Color.red);
-       Debug.DrawLine(nearPosition,controllerPosition,Color.blue);
-       Debug.DrawLine(controllerPosition,currentLineProgress, Color.white);
-       Debug.DrawLine(controllerPosition,nearPosition + currentLineProgress, Color.green);
-       
-       
+       //this part controls what the desired offsets will be
+        switch (reachingState)
+        {
+            case ReachingState.NotReaching:
+                InstantiateZeroBiases();
+                ApplyBiasesToTransforms();
+                return;
+            case ReachingState.InitialReaching:
+                ApplyBiasesToTransforms();
+                return;
+            //these are the cases that will apply some measure of perturbation
+            //so we don't return but just continue onto the bottom block
+            case ReachingState.PerturbedInThisFrame:
+                perturbStartTime = Time.time;
+                perturbProgress = SetBiasByAnimation(currentCondition);
+                reachingState = ReachingState.ApplyingPerturbation;
+                ApplyBiasesToTransforms();
+                return;
+            case ReachingState.ApplyingPerturbation:
+                perturbProgress = SetBiasByAnimation(currentCondition);
+                if (perturbProgress >= 1.0f)
+                {
+                    reachingState = ReachingState.AwaitingEndPosition;
+                }
+                ApplyBiasesToTransforms();
+                return;
+            case ReachingState.AwaitingEndPosition:
+                //pass, keeping the last values for the pos/rot biases.
+                ApplyBiasesToTransforms();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        //this part implements them
+
+        
+        //NormalizedTaskProgress(nearTarget.transform.position,farTarget.transform.position,RepresentationCenterCube.transform.position);
    }
 
-   internal void ResetBiases()
+   private void ApplyBiasesToTransforms()
    {
-       avatarAndHandPos = new Vector3[2] {Vector3.zero, Vector3.zero};
-       avatarAndHandRot =  new Quaternion[2] {Quaternion.identity, Quaternion.identity};
+       CursorSphere.transform.localPosition = cursorAndHandPos[(int)RepresentationType.Cursor];
+       CursorSphere.transform.localRotation = cursorAndHandRot[(int)RepresentationType.Cursor];
+       HandRepresentation.transform.localPosition = cursorAndHandPos[(int)RepresentationType.Hand];
+       HandRepresentation.transform.localRotation = cursorAndHandRot[(int)RepresentationType.Hand];
    }
 
-   internal void SetPosBias(RepresentationType item, Vector3 inputVector)
+   private float SetBiasByAnimation(Condition _currentCondition)
    {
-           avatarAndHandPos[(int)item] = inputVector;
+       applicationProgress = normalizedAnimationCurve.Evaluate(Time.time - perturbStartTime);
+       SetPosBias(RepresentationType.Cursor, _currentCondition.cursorPos * applicationProgress);
+       SetPosBias(RepresentationType.Hand, _currentCondition.handPos * applicationProgress);
+       //TODO hand rotation
+       return applicationProgress;
+   }
+
+   private void InstantiateZeroBiases()
+   {
+       cursorAndHandPos[0] = Vector3.zero;
+       cursorAndHandPos[1] = Vector3.zero;
+       cursorAndHandRot[0] = Quaternion.identity;
+       cursorAndHandRot[1] = Quaternion.identity;
    }
    
-   internal void SetRotBias(RepresentationType item, Quaternion inputRotation)
+   private void ResetBiases()
    {
-       avatarAndHandRot[(int)item] = inputRotation;
+       CursorSphere.transform.localPosition = Vector3.zero;
+       CursorSphere.transform.localRotation = Quaternion.identity;
+       HandRepresentation.transform.localPosition = Vector3.zero;
+       HandRepresentation.transform.localRotation = Quaternion.identity;
+   }
+
+   private void SetPosBias(RepresentationType item, Vector3 inputVector)
+   {
+           cursorAndHandPos[(int)item] = inputVector;
    }
    
-   
+   private void SetRotBias(RepresentationType item, Quaternion inputRotation)
+   {
+       cursorAndHandRot[(int)item] = inputRotation;
+   }
+
+
+   public void EndTrial()
+   {
+        trialIndex += 1;
+        reachingState = ReachingState.NotReaching;
+        Debug.Log($"list has {conditionsList.Count} elements");
+        if (trialIndex >= conditionsList.Count)
+        {
+            Debug.Log("ran out of tasks");
+            return;
+        }
+        currentCondition = conditionsList[trialIndex];
+        Debug.Log($"list has {conditionsList.Count} elements");
+        Debug.Log($"newcond: {currentCondition.ToJSON()}");
+   }
 }

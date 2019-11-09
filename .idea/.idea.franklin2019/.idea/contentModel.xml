@@ -8,6 +8,8 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="AdjustPositions.cs" t="Include" />
+        <e p="Conditions.cs" t="Include" />
+        <e p="EndingPosition.cs" t="Include" />
         <e p="Oculus" t="Include">
           <e p="AudioManager" t="Include">
             <e p="Scenes" t="Include">
@@ -674,7 +676,9 @@
             </e>
           </e>
         </e>
+        <e p="ProgressScript.cs" t="Include" />
         <e p="RepresentationController.cs" t="Include" />
+        <e p="ShowCondition.cs" t="Include" />
         <e p="Signals.cs" t="Include" />
         <e p="SimpleFX" t="Include">
           <e p="Materials" t="Include">
@@ -682,6 +686,35 @@
           </e>
         </e>
         <e p="StartingPosition.cs" t="Include" />
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+        <e p="TriggerPerturbation.cs" t="Include" />
         <e p="TriggerScript.cs" t="Include" />
         <e p="Zero Rare" t="Include">
           <e p="Retro Sound Effects" t="Include">
