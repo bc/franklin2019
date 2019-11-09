@@ -34,11 +34,13 @@ public class StartingPosition : MonoBehaviour
 
 		if (framesInStartCube >= randomDebounce)
 		{
+			//task success!
 			startCubeRenderer.material.color = Color.green;
 			var goSignalGameObject = Instantiate(goSignalPrefab, transform);
 			Destroy(goSignalGameObject, 2);
 			framesInStartCube = 0;
-			signalScript.ClearOldValues();
+			//initiate data collection
+			signalScript.StartNewTrialResponse();
 			representationController.reachingState = ReachingState.InitialReaching;
 		}
 		else

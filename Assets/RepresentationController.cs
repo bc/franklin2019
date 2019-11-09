@@ -41,10 +41,11 @@ public class RepresentationController : MonoBehaviour
     public int trialIndex;//where each trial is a reach with given condition.
     public Condition currentCondition;
     public List<Condition> conditionsList;
-
+    public Signals signals;
     
     private void Start()
     {
+        signals = GameObject.Find("ScriptManager").GetComponent<Signals>();
         conditionsList = Condition.GenerateFullyJumbledBlockHandAlwaysPresent(1,1,0.020f,0);
         InstantiateZeroBiases();
         ResetBiases();
@@ -147,11 +148,11 @@ public class RepresentationController : MonoBehaviour
         Debug.Log($"list has {conditionsList.Count} elements");
         if (trialIndex >= conditionsList.Count)
         {
-            Debug.Log("ran out of tasks");
+            //ran out of tasks.
             return;
         }
         currentCondition = conditionsList[trialIndex];
-        Debug.Log($"list has {conditionsList.Count} elements");
-        Debug.Log($"newcond: {currentCondition.ToJSON()}");
+        signals.SaveTrialResponse();
+        signals.StartNewTrialResponse();
    }
 }
