@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Permissions;
-using System.Security.Policy;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 [Serializable]
 public struct Observation
