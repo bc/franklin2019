@@ -153,6 +153,7 @@ public class RepresentationController : MonoBehaviour
         currentCondition = conditionsList[trialIndex];
         signals.SaveTrialResponse();
         AnimationCurve speedProfile = signals.ReachVelocityProfile();
+        Debug.Log($"max val in speed was: {speedProfile.keys.Select(x=>x.value).Max()}"); 
         signals.StartNewTrialResponse();
    }
 }
