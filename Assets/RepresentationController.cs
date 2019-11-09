@@ -152,6 +152,7 @@ public class RepresentationController : MonoBehaviour
         }
         currentCondition = conditionsList[trialIndex];
         signals.SaveTrialResponse();
+        AnimationCurve speedProfile = signals.ReachVelocityProfile();
         signals.StartNewTrialResponse();
    }
 }

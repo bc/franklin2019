@@ -124,4 +124,11 @@ public class Signals : MonoBehaviour
 	{
 		obs = new TrialResponse(participant, rc, start.position, end.position, perturb.position);
 	}
+
+	public AnimationCurve ReachVelocityProfile()
+	{
+		var curve = new AnimationCurve();
+		obs.observationsOverTime.Select(x => curve.AddKey(x.time_ms, x.controllerKinematics.posR.x));'
+		return curve;
+	}
 }
