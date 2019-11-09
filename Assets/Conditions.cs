@@ -41,8 +41,7 @@ public struct Condition
         perturbationType = _perturbationType;
         perturbationDirection = _perturbationDirection;
         Vector3 perturbVector3 = Vector3.right * GetFloatDirection(perturbationDirection) * perturbationMeters;
-        
-        id = "";
+        id = Guid.NewGuid().ToString();
         blockNumber = _blockNumber;
         NullRotation();
         switch (_perturbationType)
@@ -112,16 +111,12 @@ public struct Condition
                 // Don't add a condition that is functionally equivalent to the null case (where hand is present).
                 // don't add the static, and don't add where hand is missing.
                 var is_equiv = EquivalentToControlCase(dir, type);
-                if (is_equiv)
+
+                if (!is_equiv)
+                {
                     myList.Add(new Condition(type, dir, perturbationDistance, blockNumber));
-                else
-                    break;
+                }
             }
-        }
-        //assign unique id to each
-        for (int i = 0; i < myList.Count(); i++)
-        {
-            myList[i].SetGuid();
         }
         return(ShuffleConditions(myList).ToList());
     }
@@ -131,11 +126,6 @@ public struct Condition
         return dir == PerturbationDirection.None ||
                type == PerturbationType.DartStaticHandStaticControl ||
                type == PerturbationType.DartMovesHandMissing;
-    }
-
-    private void SetGuid()
-    {
-        id = Guid.NewGuid().ToString();
     }
 
     internal static Condition GenerateControlCondition(float perturbationDistance,int blockNumber)
