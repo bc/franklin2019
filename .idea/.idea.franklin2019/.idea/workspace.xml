@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41a51955-ee82-42e7-8b2c-b8331907f618" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.franklin2019/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.franklin2019/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.franklin2019/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.franklin2019/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RepresentationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RepresentationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/OVRBuildConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/OVRBuildConfig.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/VisuoPerturb.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/VisuoPerturb.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Signals.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Signals.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/RepresentationController.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1621">
-              <caret line="145" column="22" selection-start-line="145" selection-start-column="22" selection-end-line="145" selection-end-column="22" />
+            <state relative-caret-position="165">
+              <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
               <folding>
                 <marker date="1573356406928" expanded="false" signature="6:111" ph="..." />
                 <marker date="1573356406928" expanded="true" signature="143:163" ph="{...}" />
@@ -325,7 +319,7 @@
       <updated>1573097084223</updated>
       <workItem from="1573097090503" duration="6935000" />
       <workItem from="1573111949651" duration="49938000" />
-      <workItem from="1573355617354" duration="3747000" />
+      <workItem from="1573355617354" duration="4332000" />
     </task>
     <task id="LOCAL-00001" summary="operational condition applicator, nonworking conditions list">
       <created>1573289298852</created>
@@ -366,7 +360,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60620000" />
+    <option name="totallyTimeSpent" value="61205000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -379,7 +373,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.3042362" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24967907" />
@@ -389,7 +382,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.38601533" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.38601533" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3293011" />
@@ -929,8 +922,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/RepresentationController.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1621">
-          <caret line="145" column="22" selection-start-line="145" selection-start-column="22" selection-end-line="145" selection-end-column="22" />
+        <state relative-caret-position="165">
+          <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
           <folding>
             <marker date="1573356406928" expanded="false" signature="6:111" ph="..." />
             <marker date="1573356406928" expanded="true" signature="143:163" ph="{...}" />
