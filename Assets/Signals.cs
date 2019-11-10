@@ -127,8 +127,16 @@ public class Signals : MonoBehaviour
 
 	public AnimationCurve ReachVelocityProfile()
 	{
-		var curve = new AnimationCurve();
-		obs.observationsOverTime.Select(x => curve.AddKey(x.time_ms, x.controllerKinematics.posR.x));'
-		return curve;
+		var curveA = new AnimationCurve();
+		var curveB = new AnimationCurve();
+		foreach (var v in obs.observationsOverTime)
+		{
+			curveA.AddKey(v.time_ms - obs.observationsOverTime[0].time_ms, v.controllerKinematics.velR.x);
+		}
+
+		//var noResult = obs.observationsOverTime.Select(x => curveB.AddKey(x.time_ms, x.controllerKinematics.velR.x));
+		
+
+		return curveA;
 	}
 }

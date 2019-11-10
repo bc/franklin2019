@@ -41,7 +41,8 @@ public class RepresentationController : MonoBehaviour
     public Condition currentCondition;
     public List<Condition> conditionsList;
     public Signals signals;
-    
+    public AnimationCurve lastReachSpeedProfile;
+
     private void Start()
     {
         signals = GameObject.Find("ScriptManager").GetComponent<Signals>();
@@ -152,8 +153,8 @@ public class RepresentationController : MonoBehaviour
         }
         currentCondition = conditionsList[trialIndex];
         signals.SaveTrialResponse();
-        AnimationCurve speedProfile = signals.ReachVelocityProfile();
-        Debug.Log($"max val in speed was: {speedProfile.keys.Select(x=>x.value).Max()}"); 
+        lastReachSpeedProfile = signals.ReachVelocityProfile();
+        Debug.Log($"max val in speed was: {lastReachSpeedProfile.keys.Select(x=>x.value).Max()}"); 
         signals.StartNewTrialResponse();
    }
 }

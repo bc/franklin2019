@@ -8,6 +8,7 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="AdjustPositions.cs" t="Include" />
+        <e p="AdjustTaskHeight.cs" t="Include" />
         <e p="ArtificialControl.cs" t="Include" />
         <e p="Conditions.cs" t="Include" />
         <e p="EndingPosition.cs" t="Include" />
@@ -718,6 +719,7 @@
         </e>
         <e p="TriggerPerturbation.cs" t="Include" />
         <e p="TriggerScript.cs" t="Include" />
+        <e p="VRControl.cs" t="Include" />
         <e p="Zero Rare" t="Include">
           <e p="Retro Sound Effects" t="Include">
             <e p="Demo" t="Include">

@@ -9,6 +9,7 @@ TagManager:
   - taskContainerTag
   - BiasZoneTag
   - CursorColliderObject
+  - LockToHandAvatar
   layers:
   - Default
   - TransparentFX
