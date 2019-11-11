@@ -17,7 +17,7 @@ public struct Observation
 	{
 		time_ms = Time.time;
 		frame = Time.frameCount;
-		controllerKinematics = new OVRKinematics();
+		controllerKinematics = new OVRKinematics(OVRInput.Controller.RTouch);
 		reachState = rc.reachingState.ToString();
 		perturbationProgress = rc.perturbProgress;
 	}
@@ -33,15 +33,15 @@ public struct OVRKinematics
 	public Vector3 rotdotR; //radians per second, per dimension
 	public Vector3 rotdotdotR; // radians per second per second, per dimension
 
-	public OVRKinematics(string g="h")
+	public OVRKinematics(OVRInput.Controller controller)
 	{
-		posR = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
-		velR = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch);
-		accR = OVRInput.GetLocalControllerAcceleration(OVRInput.Controller.RTouch);
-		rotR = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
-		rotREuler = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch).eulerAngles;
-		rotdotR = OVRInput.GetLocalControllerAngularVelocity(OVRInput.Controller.RTouch);
-		rotdotdotR = OVRInput.GetLocalControllerAngularAcceleration(OVRInput.Controller.RTouch);
+		posR = OVRInput.GetLocalControllerPosition(controller);
+		velR = OVRInput.GetLocalControllerVelocity(controller);
+		accR = OVRInput.GetLocalControllerAcceleration(controller);
+		rotR = OVRInput.GetLocalControllerRotation(controller);
+		rotREuler = OVRInput.GetLocalControllerRotation(controller).eulerAngles;
+		rotdotR = OVRInput.GetLocalControllerAngularVelocity(controller);
+		rotdotdotR = OVRInput.GetLocalControllerAngularAcceleration(controller);
 	}
 }
 
@@ -128,15 +128,16 @@ public class Signals : MonoBehaviour
 	public AnimationCurve ReachVelocityProfile()
 	{
 		var curveA = new AnimationCurve();
-		var curveB = new AnimationCurve();
 		foreach (var v in obs.observationsOverTime)
 		{
 			curveA.AddKey(v.time_ms - obs.observationsOverTime[0].time_ms, v.controllerKinematics.velR.x);
 		}
 
-		//var noResult = obs.observationsOverTime.Select(x => curveB.AddKey(x.time_ms, x.controllerKinematics.velR.x));
-		
-
 		return curveA;
+	}
+
+	public static OVRKinematics GetKinematics(OVRInput.Controller controller)
+	{
+		return new OVRKinematics(controller);
 	}
 }

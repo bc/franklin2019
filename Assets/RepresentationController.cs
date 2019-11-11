@@ -40,11 +40,14 @@ public class RepresentationController : MonoBehaviour
     public int trialIndex;//where each trial is a reach with given condition.
     public Condition currentCondition;
     public List<Condition> conditionsList;
-    public Signals signals;
+    private Signals signals;
     public AnimationCurve lastReachSpeedProfile;
+    private PlotGenerator plotGenerator;
+
 
     private void Start()
     {
+        plotGenerator = GameObject.Find("PlotGenerator").GetComponent<PlotGenerator>();
         signals = GameObject.Find("ScriptManager").GetComponent<Signals>();
         conditionsList = Condition.GenerateFullyJumbledBlockHandAlwaysPresent(1,1,0.020f,0);
         InstantiateZeroBiases();
@@ -154,7 +157,8 @@ public class RepresentationController : MonoBehaviour
         currentCondition = conditionsList[trialIndex];
         signals.SaveTrialResponse();
         lastReachSpeedProfile = signals.ReachVelocityProfile();
-        Debug.Log($"max val in speed was: {lastReachSpeedProfile.keys.Select(x=>x.value).Max()}"); 
+        Debug.Log($"max val in speed was: {lastReachSpeedProfile.keys.Select(x=>x.value).Max()}");
+        plotGenerator.PlotIt(lastReachSpeedProfile);
         signals.StartNewTrialResponse();
    }
 }

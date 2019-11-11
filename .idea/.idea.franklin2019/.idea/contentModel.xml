@@ -11,6 +11,7 @@
         <e p="AdjustTaskHeight.cs" t="Include" />
         <e p="ArtificialControl.cs" t="Include" />
         <e p="Conditions.cs" t="Include" />
+        <e p="ControllerDiagnostics.cs" t="Include" />
         <e p="EndingPosition.cs" t="Include" />
         <e p="KeyboardControl.cs" t="Include" />
         <e p="Oculus" t="Include">
@@ -679,6 +680,7 @@
             </e>
           </e>
         </e>
+        <e p="PlotGenerator.cs" t="Include" />
         <e p="ProgressScript.cs" t="Include" />
         <e p="RepresentationController.cs" t="Include" />
         <e p="ShowCondition.cs" t="Include" />
